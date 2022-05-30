@@ -25,6 +25,7 @@ const mutations = {
 };
 const actions = {
   login({ commit }, flag = true) {
+    console.log("---login---");
     if (typeof window.ethereum !== "undefined") {
       const address = window.ethereum.selectedAddress;
       const addressCache = getCookie("address");

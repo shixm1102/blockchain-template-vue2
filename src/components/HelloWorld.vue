@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1 v-if="address">{{ address | formatAddress }}</h1>
-    <h2>{{ isSupportChain && "请切换至支持的公链" }}</h2>
+    <h2>{{ isSupportChain ? "请切换至支持的公链" : "" }}</h2>
     <button @click="login">connect Wallet</button>
     <button @click="logout">logout</button>
   </div>
@@ -12,7 +12,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "HelloWorld",
   computed: {
-    ...mapGetters(["address"]),
+    ...mapGetters(["address", "isSupportChain"]),
   },
   methods: {
     ...mapActions(["login", "logout"]),
