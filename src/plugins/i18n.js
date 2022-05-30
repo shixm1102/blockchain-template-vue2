@@ -5,7 +5,7 @@ Vue.use(VueI18n);
 
 function loadLocaleMessages() {
   const locales = require.context(
-    "./locales",
+    "../locales",
     true,
     /[A-Za-z0-9-_,\s]+\.json$/i
   );
@@ -20,8 +20,17 @@ function loadLocaleMessages() {
   return messages;
 }
 
-export default new VueI18n({
+const i18n = new VueI18n({
   locale: process.env.VUE_APP_I18N_LOCALE || "en",
   fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || "en",
   messages: loadLocaleMessages(),
 });
+
+export default i18n;
+
+function changeLang() {
+  const locale = i18n.locale;
+  i18n.locale = locale === "en" ? "zh" : "en";
+}
+
+Vue.prototype.$changeLang = changeLang;
