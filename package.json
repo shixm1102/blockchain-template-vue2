@@ -5,9 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "stage": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "bignumber.js": "^9.0.2",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
