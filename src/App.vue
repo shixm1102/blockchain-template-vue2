@@ -8,6 +8,21 @@
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+import { mapActions } from "vuex";
+
+export default {
+  name: "Home",
+  created() {
+    this.login(false);
+  },
+  methods: {
+    ...mapActions(["login"]),
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -1,6 +1,6 @@
-import { ETH_CHAINS_INFO } from "../../config/chains";
-import { connect } from "../../utils/metamask";
-import { setCookie, getCookie, clearCookie } from "../../utils/cookie";
+import { ETH_CHAINS_INFO } from "@/config/chains";
+import { connect } from "@/utils/metamask";
+import { setCookie, getCookie, clearCookie } from "@/utils/cookie";
 
 const state = {
   chainId: undefined,
@@ -10,21 +10,21 @@ const state = {
 };
 const mutations = {
   SET_ADDRESS(state, address) {
+    console.log("SET_ADDRESS", address);
     state.address = address;
     address ? setCookie("address", address, 15) : clearCookie();
   },
   SET_CHAINID(state, chainId) {
     state.chainId = chainId;
-    state.isSupportChain = Object.keys(ETH_CHAINS_INFO).includes(
-      chainId.toString()
-    );
+    state.isSupportChain =
+      chainId && Object.keys(ETH_CHAINS_INFO).includes(chainId.toString());
   },
   SET_BALANCE(state, balance) {
     state.balance = balance;
   },
 };
 const actions = {
-  login({ commit }) {
+  login({ commit }, flag = true) {
     if (typeof window.ethereum !== "undefined") {
       const address = window.ethereum.selectedAddress;
       const addressCache = getCookie("address");
@@ -32,7 +32,7 @@ const actions = {
         const chainId = window.ethereum.chainId;
         commit("SET_ADDRESS", address);
         commit("SET_CHAINID", chainId);
-      } else {
+      } else if (flag) {
         connect().then(({ address, chainId }) => {
           commit("SET_ADDRESS", address);
           commit("SET_CHAINID", chainId);
@@ -47,6 +47,7 @@ const actions = {
   logout({ commit }) {
     commit("SET_ADDRESS", undefined);
     commit("SET_CHAINID", undefined);
+    commit("SET_BALANCE", 0);
   },
 };
 

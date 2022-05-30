@@ -7,7 +7,8 @@ import BigNumber from "bignumber.js";
  * @param {number} aft 后面显示几位
  */
 export function formatAddress(address, bef = 3, aft = 4) {
-  return address.substr(0, bef) + "..." + address.substr(-aft);
+  if (address) return address.substr(0, bef) + "..." + address.substr(-aft);
+  else return "--";
 }
 
 /**
