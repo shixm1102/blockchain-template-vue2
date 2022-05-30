@@ -1370,7 +1370,7 @@
     webpack "^4.0.0"
     yorkie "^2.0.0"
 
-"@vue/cli-plugin-router@^4.5.17":
+"@vue/cli-plugin-router@^4.5.17", "@vue/cli-plugin-router@~4.5.12":
   version "4.5.17"
   resolved "https://registry.npmmirror.com/@vue/cli-plugin-router/-/cli-plugin-router-4.5.17.tgz#9de189a7a8740817cde2a4e57aade14552ff68c3"
   integrity sha512-9r9CSwqv2+39XHQPDZJ0uaTtTP7oe0Gx17m7kBhHG3FA7R7AOSk2aVzhHZmDRhzlOxjx9kQSvrOSMfUG0kV4dQ==
@@ -8323,6 +8323,11 @@ vue-loader@^15.9.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-router@^3.2.0:
+  version "3.5.4"
+  resolved "https://registry.npmmirror.com/vue-router/-/vue-router-3.5.4.tgz#c453c0b36bc75554de066fefc3f2a9c3212aca70"
+  integrity sha512-x+/DLAJZv2mcQ7glH2oV9ze8uPwcI+H+GgTgTmb5I55bCgY3+vXWIsqbYUzbBSZnwFHEJku4eoaH/x98veyymQ==
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.3"
