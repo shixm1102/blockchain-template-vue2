@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1 v-if="address">{{ address | formatAddress }}</h1>
+    <h2>{{ isSupportChain && "请切换至支持的公链" }}</h2>
     <button @click="login">connect Wallet</button>
     <button @click="logout">logout</button>
   </div>
@@ -20,19 +21,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
+<style lang="scss" scoped>
+h1 {
   margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+  color: red;
 }
 </style>
