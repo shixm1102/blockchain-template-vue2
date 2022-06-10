@@ -2,9 +2,9 @@
 // JS操作cookies方法!
 
 // 设置cookie
-export function setCookie(cname, cvalue, exdays) {
+export function setCookie(cname, cvalue, exmins) {
   var d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  d.setTime(d.getTime() + exmins * 60 * 1000);
   var expires = "expires=" + d.toGMTString();
   document.cookie = cname + "=" + cvalue + "; " + expires;
 }

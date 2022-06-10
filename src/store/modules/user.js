@@ -9,10 +9,23 @@ const state = {
   isSupportChain: false,
 };
 const mutations = {
-  SET_ADDRESS(state, address) {
+  SET_ADDRESS(state, address, flag) {
     console.log("SET_ADDRESS", address);
     state.address = address;
-    address ? setCookie("address", address, 15) : clearCookie();
+    if (flag) {
+      address ? setCookie("address", address, 30) : clearCookie();
+      setTimeout(() => {
+        clearCookie();
+        state.address = undefined;
+      }, 1800000);
+    } else {
+      setInterval(() => {
+        const addressCache = getCookie("address");
+        if (!addressCache) {
+          state.address = undefined;
+        }
+      }, 60000);
+    }
   },
   SET_CHAINID(state, chainId) {
     state.chainId = chainId;
@@ -27,12 +40,14 @@ const actions = {
   login({ commit }, flag = true) {
     console.log("---login---");
     if (typeof window.ethereum !== "undefined") {
-      const address = window.ethereum.selectedAddress;
       const addressCache = getCookie("address");
-      if (address && addressCache) {
-        const chainId = window.ethereum.chainId;
-        commit("SET_ADDRESS", address);
-        commit("SET_CHAINID", chainId);
+      if (addressCache) {
+        setTimeout(() => {
+          const address = window.ethereum.selectedAddress;
+          const chainId = window.ethereum.chainId;
+          commit("SET_ADDRESS", address);
+          commit("SET_CHAINID", chainId);
+        }, 1000);
       } else if (flag) {
         connect().then(({ address, chainId }) => {
           commit("SET_ADDRESS", address);
