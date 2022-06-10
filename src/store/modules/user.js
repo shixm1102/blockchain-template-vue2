@@ -9,22 +9,25 @@ const state = {
   isSupportChain: false,
 };
 const mutations = {
-  SET_ADDRESS(state, address, flag) {
-    console.log("SET_ADDRESS", address);
+  SET_ADDRESS(state, { address, flag }) {
     state.address = address;
-    if (flag) {
-      address ? setCookie("address", address, 30) : clearCookie();
-      setTimeout(() => {
-        clearCookie();
-        state.address = undefined;
-      }, 1800000);
-    } else {
-      setInterval(() => {
-        const addressCache = getCookie("address");
-        if (!addressCache) {
+    if (address) {
+      if (flag) {
+        setCookie("address", address, 30);
+        setTimeout(() => {
+          clearCookie();
           state.address = undefined;
-        }
-      }, 60000);
+        }, 1800000);
+      } else {
+        setInterval(() => {
+          const addressCache = getCookie("address");
+          if (!addressCache) {
+            state.address = undefined;
+          }
+        }, 60000);
+      }
+    } else {
+      clearCookie();
     }
   },
   SET_CHAINID(state, chainId) {
@@ -38,30 +41,35 @@ const mutations = {
 };
 const actions = {
   login({ commit }, flag = true) {
-    console.log("---login---");
     if (typeof window.ethereum !== "undefined") {
+      commit("SET_METAMASK", true);
+      // const address = window.ethereum.selectedAddress;
       const addressCache = getCookie("address");
+      // console.log(address, addressCache);
       if (addressCache) {
-        setTimeout(() => {
-          const address = window.ethereum.selectedAddress;
-          const chainId = window.ethereum.chainId;
-          commit("SET_ADDRESS", address);
+        //   const chainId = window.ethereum.chainId;
+        //   commit("SET_ADDRESS", address);
+        //   commit("SET_CHAINID", chainId);
+        // } else if (flag) {
+        connect().then(({ address, chainId }) => {
+          commit("SET_ADDRESS", { address, flag });
           commit("SET_CHAINID", chainId);
-        }, 1000);
+        });
       } else if (flag) {
         connect().then(({ address, chainId }) => {
-          commit("SET_ADDRESS", address);
+          commit("SET_ADDRESS", { address, flag: true });
           commit("SET_CHAINID", chainId);
         });
       }
       window.ethereum.on("chainChanged", () => window.location.reload());
       window.ethereum.on("accountsChanged", () => window.location.reload());
     } else {
+      commit("SET_METAMASK", false);
       throw Error("Please install MetaMask.");
     }
   },
   logout({ commit }) {
-    commit("SET_ADDRESS", undefined);
+    commit("SET_ADDRESS", { address: undefined });
     commit("SET_CHAINID", undefined);
     commit("SET_BALANCE", 0);
   },
